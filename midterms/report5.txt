@@ -1,0 +1,12 @@
+-create database with products
+-- there are informations about its name and description
+
+-add some frontend
+--make it connected to database
+--select query works well
+-- get datas about product from db table products
+
+-registration setup comlited
+--connect new registration front to backend
+--insert new user works well
+

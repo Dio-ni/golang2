@@ -1,0 +1,9 @@
+CREATE TRIGGER update_product_rating 
+AFTER INSERT ON ratings 
+FOR EACH ROW 
+BEGIN 
+UPDATE products p SET p.rating = 
+(SELECT ROUND(AVG(rate),2) 
+FROM ratings WHERE productId = NEW.productId) 
+WHERE p.id = NEW.productId; 
+END;
