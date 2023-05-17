@@ -1,0 +1,13 @@
+
+as planned this week we added the functionality that stores user id into local storage(it will be changed),
+- after login it sends id and name to main page where it saves into localstorage
+- we added form to send comments
+- it posts the data ( 
+        userId: which gets from localstorage,
+        productId: from url value product:{id} 
+        comment : from textarea) to sendComment which check if comment empty or not and after checking stores it to out comments table
+- to make it easier we rewrite our productPage functoin into 3:
+        - renderProductPage main one
+        - getProduct to get exact one product full information
+        - getComments to get comment to of product 
+- after comment were sent it just reloaded product page 
