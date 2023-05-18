@@ -856,7 +856,7 @@ func handleCharge(w http.ResponseWriter, r *http.Request) {
 
 	userID, _ := session.Values["userId"].(int64)
 	// Update the cart status
-	err = UpdateCartStatus(paymentRequest.CartID, "paid", userID)
+	err = UpdateCartStatus(paymentRequest.CartID, "paid", us)
 	if err != nil {
 		http.Error(w, "Failed to update cart status", http.StatusInternalServerError)
 		return
