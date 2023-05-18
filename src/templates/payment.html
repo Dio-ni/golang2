@@ -118,10 +118,9 @@
 				})
 				.then(response => response.json())
 				.then(response => {
-					if (!response.ok) {
-						return response.text().then(errorMessage => {
+					if (response.status != 'succeeded') {
 						document.querySelector('#error-message').innerHTML = errorMessage;
-						});
+						
 					} else {
 						// Redirect to '/'
 						window.location.href = '/';

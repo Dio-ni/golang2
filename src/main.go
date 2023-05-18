@@ -563,7 +563,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	if len(products) == 0 {
 		viewData.Error = "Cart is empty"
 	}
-
+	fmt.Println(userID)
 	// Prepare the SQL query
 	query := `SELECT totalprice,cart_id FROM cart WHERE user_id = ? and status='incart'`
 	// Execute the query
@@ -919,7 +919,7 @@ func AddToCart(productID string, userId int64) error {
 				return nil
 			}
 		} else {
-			_, err = db.Exec("insert into cart(cart_id	,user_id,totalprice) values(?,?,0.0)", cartID+1, userId)
+			_, err = db.Exec("insert into cart(cart_id	,user_id,totalprice,status) values(?,?,0.0,'incart')", cartID+1, userId)
 			if err != nil {
 				fmt.Print(err)
 				return err
@@ -933,7 +933,7 @@ func AddToCart(productID string, userId int64) error {
 		}
 	} else {
 		fmt.Print("count 0")
-		_, err = db.Exec("insert into cart(cart_id	,user_id,totalprice) values(?,?,0.0)", 1, userId)
+		_, err = db.Exec("insert into cart(cart_id	,user_id,totalprice,status) values(?,?,0.0,'incart')", 1, userId)
 		if err != nil {
 			fmt.Print(err)
 			return err
