@@ -849,8 +849,14 @@ func handleCharge(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Payment intent creation failed", http.StatusInternalServerError)
 		return
 	}
+	session, err := store.Get(r, "session")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	userID, _ := session.Values["userId"].(int64)
 	// Update the cart status
-	err = UpdateCartStatus(paymentRequest.CartID, "paid")
+	err = UpdateCartStatus(paymentRequest.CartID, "paid", userID)
 	if err != nil {
 		http.Error(w, "Failed to update cart status", http.StatusInternalServerError)
 		return
@@ -871,7 +877,7 @@ func handleCharge(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonResponse)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
-func UpdateCartStatus(cartID string, status string) error {
+func UpdateCartStatus(cartID string, status string, userID int64) error {
 	// Example database update logic:
 
 	db, err := config.LoadDB()
@@ -879,7 +885,7 @@ func UpdateCartStatus(cartID string, status string) error {
 		return err
 	}
 
-	_, err = db.Exec("UPDATE cart SET status = ? WHERE cart_id = ? and user_id=?", status, cartID, 1)
+	_, err = db.Exec("UPDATE cart SET status = ? WHERE cart_id = ? and user_id=?", status, cartID, userID)
 	if err != nil {
 		return err
 	}
